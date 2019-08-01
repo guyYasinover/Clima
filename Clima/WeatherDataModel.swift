@@ -17,8 +17,6 @@ class WeatherDataModel {
     var weatherIconName : String = ""
     
     
-    
-    
     //This method turns a condition code into the name of the weather condition image
     
     func updateWeatherIcon(condition: Int) -> String {

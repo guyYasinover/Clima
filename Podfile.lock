@@ -1,24 +1,37 @@
 PODS:
   - Alamofire (4.8.2)
+  - GoogleMaps (3.2.0):
+    - GoogleMaps/Maps (= 3.2.0)
+  - GoogleMaps/Base (3.2.0)
+  - GoogleMaps/Maps (3.2.0):
+    - GoogleMaps/Base
+  - GooglePlaces (3.2.0):
+    - GoogleMaps/Base (= 3.2.0)
   - SVProgressHUD (2.2.5)
   - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
   - Alamofire
+  - GoogleMaps
+  - GooglePlaces
   - SVProgressHUD
   - SwiftyJSON
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - GoogleMaps
+    - GooglePlaces
     - SVProgressHUD
     - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  GoogleMaps: 5046d7edfe381c1a0b20fdaf293915a375c3122b
+  GooglePlaces: 41bc2e480816b1234a48f4bec92e1c886f37cfe1
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 0839f2afde8604cc47bfd9461046767e71995b6d
+PODFILE CHECKSUM: afcac309c3ea88127297778e5663e0b2a522f68c
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.7.2

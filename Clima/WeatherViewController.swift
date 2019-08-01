@@ -11,12 +11,12 @@ import CoreLocation
 import Alamofire
 import SwiftyJSON
 
-class WeatherViewController: UIViewController, CLLocationManagerDelegate, changeCityDelegate {
+class WeatherViewController: UIViewController, CLLocationManagerDelegate, ChangeCityViewControllerDelegate {
     
     //Constants
     let WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather"
     let APP_ID = "3562a136251c60df090d91bb5048b42a"
-    /***Get your own App ID at https://openweathermap.org/appid ****/
+    /*** Get your own App ID at https://openweathermap.org/appid ***/
     
 
     //TODO: Declare instance variables here
@@ -24,7 +24,6 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, change
     let weatherDataModel = WeatherDataModel()
     
 
-    
     //Pre-linked IBOutlets
     @IBOutlet weak var weatherIcon: UIImageView!
     @IBOutlet weak var cityLabel: UILabel!
@@ -33,7 +32,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, change
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navagationBarCustomization()
         
         //TODO:Set up the location manager here.
         locationManager.delegate = self
@@ -155,8 +154,8 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, change
     
     
     //Write the userEnteredANewCityName Delegate method here:
-    func userEnteredANewCityName(city: String) {
-        
+    
+    func changeCityViewController(_ controller: ChangeCityViewController, didSelectCity city: String) {        
         let params : [String : String] = ["q" : city, "appid" : APP_ID]
         
         getWeatherData(url: WEATHER_URL, parameters: params)
@@ -175,7 +174,14 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, change
         }
     }
     
-    
+    func navagationBarCustomization(){
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = .clear
+        self.navigationController?.navigationBar.tintColor = .white
+        
+    }
     
 }
 
