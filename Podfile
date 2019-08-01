@@ -10,6 +10,8 @@ target 'Clima' do
     pod 'SwiftyJSON'
     pod 'Alamofire'
     pod 'SVProgressHUD'
+    pod 'GooglePlaces'
+    pod 'GoogleMaps'
 
 end
 
