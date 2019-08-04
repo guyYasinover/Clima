@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  Clima
 //
-//  Created by Angela Yu on 04/09/2015.
-//  Copyright (c) 2015 London App Brewery. All rights reserved.
+//  Created by Guy Yasinover on 04/09/2015.
+//  Copyright Guy Yasinover. All rights reserved.
 //
 
 import UIKit
@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        GMSPlacesClient.provideAPIKey("Enter Your Google API-Key")
+        GMSPlacesClient.provideAPIKey("AIzaSyAxQwLPsjkoEivZwUzLAQ550ZiN-F74h6U")
         
         return true
     }
