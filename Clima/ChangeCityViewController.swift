@@ -49,7 +49,6 @@ class ChangeCityViewController: UIViewController {
         searchController.searchBar.autoresizingMask = .flexibleWidth
         searchController.searchBar.searchBarStyle = .minimal
         
-        
         searchController.searchBar.sizeToFit()
         
         navigationItem.titleView = searchController.searchBar

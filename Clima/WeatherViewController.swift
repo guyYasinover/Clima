@@ -28,7 +28,8 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
     @IBOutlet weak var weatherIcon: UIImageView!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
-
+    @IBOutlet weak var degreeSegmentedControl: UISegmentedControl!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,7 +81,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
         
         if let tempResult = json["main"]["temp"].double {
         
-        weatherDataModel.temperature = Int(tempResult - 273.15)
+        weatherDataModel.temperature = Double(tempResult - 273.15)
         
         weatherDataModel.city = json["name"].stringValue
         
@@ -104,7 +105,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
     
     
     //Write the updateUIWithWeatherData method here:
-    func updateUIWithWeatherData(){
+    func updateUIWithWeatherData() {
         
         cityLabel.text = weatherDataModel.city
         //temperatureLabel.text = String(weatherDataModel.temperature)
@@ -174,12 +175,30 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
         }
     }
     
-    func navagationBarCustomization(){
+    func navagationBarCustomization() {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
         self.navigationController?.navigationBar.tintColor = .white
+     
+    }
+    
+    
+    //MARK: - Switch degrees (celsius <-> fahrenheit)
+    
+    @IBAction func degreeSwitchAction(_ sender: Any) {
+        let celsius = Int(weatherDataModel.temperature)
+        let fahrenheit = Int((weatherDataModel.temperature * 1.8) + 32)
+
+        switch degreeSegmentedControl.selectedSegmentIndex {
+        case 0:
+            temperatureLabel.text = "\(celsius)°"
+        case 1:
+            temperatureLabel.text = "\(fahrenheit)°"
+        default:
+            break
+        }
         
     }
     

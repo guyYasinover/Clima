@@ -76,6 +76,19 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="3jy-WI-Ed6">
+                        <barButtonItem key="leftBarButtonItem" title="Degree" style="plain" id="hm7-85-9dr">
+                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="nps-dy-00R">
+                                <rect key="frame" x="16" y="7" width="157" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="℃"/>
+                                    <segment title="℉"/>
+                                </segments>
+                                <connections>
+                                    <action selector="degreeSwitchAction:" destination="vXZ-lx-hvc" eventType="valueChanged" id="xyW-bo-4fc"/>
+                                </connections>
+                            </segmentedControl>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="jVx-Qw-FH3">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="th1-Kr-XgW" userLabel="Change City Button">
                                 <rect key="frame" x="295" y="0.0" width="64" height="44"/>
@@ -95,6 +108,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cityLabel" destination="Ssc-Cu-XmK" id="8PV-i3-tg0"/>
+                        <outlet property="degreeSegmentedControl" destination="nps-dy-00R" id="kke-30-pYr"/>
                         <outlet property="temperatureLabel" destination="AT7-It-Fyf" id="aNl-QI-DaP"/>
                         <outlet property="weatherIcon" destination="C11-fU-d6q" id="AG2-gZ-vGX"/>
                     </connections>
