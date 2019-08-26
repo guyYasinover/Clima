@@ -1,6 +1,6 @@
 //
 //  ChangeCityViewController.swift
-//  WeatherApp
+//  Clima - WeatherApp
 //
 //  Created by Guy Yasinover on 04/09/2015.
 //  Copyright Guy Yasinover. All rights reserved.
@@ -16,25 +16,39 @@ protocol ChangeCityViewControllerDelegate : class {
 }
 
 
-class ChangeCityViewController: UIViewController {
+class ChangeCityViewController: UIViewController, GMSAutocompleteResultsViewControllerDelegate, UITableViewDelegate{
     
     //Declare the delegate variable here:
     weak var delegate : ChangeCityViewControllerDelegate?
+    //@IBOutlet weak var resultsSearchTableView: UITableView!
     
+    var searchHistoryArray : [GMSAutocompleteResultsViewController] = []
     
     //This is the pre-linked IBOutlets to the text field:
     //@IBOutlet weak var changeCitySearchBar: UISearchBar!
-    @IBOutlet weak var searchBarContainer : UIView!
-
+    //@IBOutlet weak var searchBarContainer : UIView!
+    @IBOutlet weak var searchHistoryTableView: UITableView!
+    
+    
+    // Create UserDefaults
+    let defaults = UserDefaults.standard
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //convert the left bar button item to an image
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "left"), style: .done, target: self, action: #selector(backAction(_:)))
-
+        leftBarButtonItem()
         setupAutoComplete()
+        
+/*        searchHistoryArray = defaults.array(forKey: "searchHistoryArray") as! [GMSAutocompleteResultsViewController] */
     }
     
+    //convert the left bar button item to an image
+    func leftBarButtonItem(){
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "left"), style: .done, target: self, action: #selector(backAction(_:)))
+    }
+    
+    //MARK: - Google Places
     var resultVC : GMSAutocompleteResultsViewController?
     var searchController : UISearchController?
     
@@ -61,17 +75,6 @@ class ChangeCityViewController: UIViewController {
         self.searchController = searchController
         self.resultVC = resultVC
         
-//        searchBarContainer.addSubview(searchController.searchBar)
-//
-//        [
-//            searchController.searchBar.trailingAnchor.constraint(equalTo: searchBarContainer.trailingAnchor),
-//            searchController.searchBar.leadingAnchor.constraint(equalTo: searchBarContainer.leadingAnchor),
-//            searchController.searchBar.topAnchor.constraint(equalTo: searchBarContainer.topAnchor),
-//            searchController.searchBar.bottomAnchor.constraint(equalTo: searchBarContainer.bottomAnchor)
-//            ].forEach{ $0.isActive = true }
-//
-
-        
     }
     
     //Animate when the back button was pressed
@@ -79,10 +82,23 @@ class ChangeCityViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    //MARK: - UITableViewDelegateMethods
+/*    private func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) -> GMSAutocompleteResultsViewController {
+
+        searchHistoryTableView.dequeueReusableCell(withIdentifier: "searchCell")
+
+        return resultVC!
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.navigationController?.popViewController(animated: true)
+    }
+ */
+    
     //This is the IBAction that gets called when the user taps on the "Get Weather" button:
     @IBAction func getWeatherPressed(_ sender: AnyObject) {
         
-        //1 Get the city name the user entered in the text field
+//        //1 Get the city name the user entered in the text field
 //        let cityName = changeCitySearchBar.text!
 //
 //        //2 If we have a delegate set, call the method userEnteredANewCityName
@@ -92,15 +108,18 @@ class ChangeCityViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
         
         
-    }
-    
-    
-    
-    
-    
-}
+/*        self.searchHistoryArray.append(self.resultVC!)
 
-extension ChangeCityViewController: GMSAutocompleteResultsViewControllerDelegate{
+        // Save String value to UserDefaults
+        self.defaults.set(self.searchHistoryArray, forKey: "searchHistoryArray")
+
+        self.searchHistoryTableView.reloadData()
+*/    }
+    
+    
+    
+    //MARK: - GMSAutocompleteResultsViewControllerDelegate
+    
     func resultsController(_ resultsController: GMSAutocompleteResultsViewController, didAutocompleteWith place: GMSPlace) {
         if let city = place.addressComponents?.first(where: { $0.types.contains("locality") })?.name{
             delegate?.changeCityViewController(self, didSelectCity: city)
@@ -109,8 +128,27 @@ extension ChangeCityViewController: GMSAutocompleteResultsViewControllerDelegate
     }
     
     func resultsController(_ resultsController: GMSAutocompleteResultsViewController, didFailAutocompleteWithError error: Error) {
-        
+        // TODO: Handle the error
+        print("Error: \(error)")
     }
     
     
+    
 }
+
+//extension ChangeCityViewController: GMSAutocompleteResultsViewControllerDelegate{
+//
+//    func resultsController(_ resultsController: GMSAutocompleteResultsViewController, didAutocompleteWith place: GMSPlace) {
+//        if let city = place.addressComponents?.first(where: { $0.types.contains("locality") })?.name{
+//            delegate?.changeCityViewController(self, didSelectCity: city)
+//        }
+//        self.navigationController?.popViewController(animated: true)
+//    }
+//
+//    func resultsController(_ resultsController: GMSAutocompleteResultsViewController, didFailAutocompleteWithError error: Error) {
+//        print("Error: \(error)")
+//    }
+//
+//}
+
+

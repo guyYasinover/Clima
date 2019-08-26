@@ -17,8 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        GMSPlacesClient.provideAPIKey("Enter Your Google API Key")
+        //GMSPlacesClient.provideAPIKey("Enter Your Google API Key") // Undo the uncommit when pushing to github.
+        GMSPlacesClient.provideAPIKey("AIzaSyAxQwLPsjkoEivZwUzLAQ550ZiN-F74h6U") // Erase the google api key when pushing to github.
         
+        //print(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last! as String)
         
         return true
     }

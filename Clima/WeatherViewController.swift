@@ -19,7 +19,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
     /*** Get your own App ID at https://openweathermap.org/appid ***/
     
 
-    //TODO: Declare instance variables here
+    // Declare instance variables here
     let locationManager = CLLocationManager()
     let weatherDataModel = WeatherDataModel()
     
@@ -35,7 +35,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
         super.viewDidLoad()
         navagationBarCustomization()
         
-        //TODO:Set up the location manager here.
+        //Set up the location manager here.
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.requestWhenInUseAuthorization()
@@ -80,8 +80,8 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
     func updateWeatherData(json : JSON) {
         
         if let tempResult = json["main"]["temp"].double {
-        
-        weatherDataModel.temperature = Double(tempResult - 273.15)
+            
+        weatherDataModel.temperature = Int(tempResult - 273.15)
         
         weatherDataModel.city = json["name"].stringValue
         
@@ -91,8 +91,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
             
         updateUIWithWeatherData()
             
-        }
-        else {
+        } else {
             cityLabel.text = "Weather Unavailable"
         }
     }
@@ -108,8 +107,10 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
     func updateUIWithWeatherData() {
         
         cityLabel.text = weatherDataModel.city
+        
         //temperatureLabel.text = String(weatherDataModel.temperature)
-        temperatureLabel.text = "\(weatherDataModel.temperature)°"
+        degreeSwitchAction(degreeSegmentedControl!)
+        
         weatherIcon.image = UIImage(named: weatherDataModel.weatherIconName)
         
     }
@@ -129,10 +130,10 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
             locationManager.stopUpdatingLocation()
             locationManager.delegate = nil
             
-        print("Longitude = \(location.coordinate.longitude), Latitude = \(location.coordinate.latitude)")
-            
             let latitude = String(location.coordinate.latitude)
             let longitude = String(location.coordinate.longitude)
+            
+            print("Longitude = \(latitude), Latitude = \(longitude)")
             
             let params : [String : String] = ["lat" : latitude, "lon" : longitude, "appid" : APP_ID]
             
@@ -184,13 +185,24 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
      
     }
     
+//    private func showTemperature(value : Double){
+//        let foramatter = MeasurementFormatter()
+//        let celsius = Measurement(value: weatherDataModel.temperature, unit: UnitTemperature.celsius)
+//        let fahrenheit = Measurement(value: weatherDataModel.temperature, unit: UnitTemperature.fahrenheit)
+//        //TODO: determine unit according to user prefences
+//        //Measurement(value: value, unit: UnitTemperature.fahrenheit)
+//
+//        temperatureLabel.text = foramatter.string(from: celsius)
+//        temperatureLabel.text = String(format: "%.1f",value)
+//    }
+    
     
     //MARK: - Switch degrees (celsius <-> fahrenheit)
     
     @IBAction func degreeSwitchAction(_ sender: Any) {
-        let celsius = Int(weatherDataModel.temperature)
-        let fahrenheit = Int((weatherDataModel.temperature * 1.8) + 32)
-
+        let celsius = weatherDataModel.temperature
+        let fahrenheit = (weatherDataModel.temperature * 18/10) + 32
+        
         switch degreeSegmentedControl.selectedSegmentIndex {
         case 0:
             temperatureLabel.text = "\(celsius)°"
@@ -200,8 +212,8 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
             break
         }
         
+        
+        
     }
     
 }
-
-
